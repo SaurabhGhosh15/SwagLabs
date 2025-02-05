@@ -6,12 +6,20 @@ import CheckoutPage from '../pages/checkout.page';
 
 test.describe('Checkout flow tests',()=>{
 
-    test('Complete a purchase successfully', async ({page})=>{
-        const loginPage = new LoginPage(page);
-        const productsPage = new ProductsPage(page);
-        const cartPage = new CartPage(page);
-        const checkoutPage = new CheckoutPage(page);
+    let productsPage;
+    let cartPage;
+    let loginPage;
+    let checkoutPage;
 
+    test.beforeEach('', ({page})=>{
+        productsPage = new ProductsPage(page);
+        cartPage = new CartPage(page);
+        loginPage = new LoginPage(page);
+        checkoutPage = new CheckoutPage(page);
+    })
+
+    test('Complete a purchase successfully', async ({page})=>{
+        
         // Step 1: Login and add items to cart
         await loginPage.navigate();
         await loginPage.login('standard_user', 'secret_sauce');
@@ -33,11 +41,7 @@ test.describe('Checkout flow tests',()=>{
     });
 
     test('Verify order summary details', async ({page})=>{
-        const loginPage = new LoginPage(page);
-        const productsPage = new ProductsPage(page);
-        const cartPage = new CartPage(page);
-        const checkoutPage = new CheckoutPage(page);
-
+        
         //Step 1: Login and add products to cart
         await loginPage.navigate();
         await loginPage.login('standard_user', 'secret_sauce');
@@ -60,10 +64,6 @@ test.describe('Checkout flow tests',()=>{
     });
 
     test('Error message for missing customer information', async ({page})=>{
-        const loginPage = new LoginPage(page);
-        const productsPage = new ProductsPage(page);
-        const cartPage = new CartPage(page);
-        const checkoutPage = new CheckoutPage(page);
 
         //Login and add items to cart
         await loginPage.navigate();
@@ -83,11 +83,7 @@ test.describe('Checkout flow tests',()=>{
     });
 
     test('Validate subtotal, tax, and total on checkout', async({page})=>{
-        const loginPage = new LoginPage(page);
-        const productsPage = new ProductsPage(page);
-        const cartPage = new CartPage(page);
-        const checkoutPage = new CheckoutPage(page);
-
+    
         //Login and add items to cart
         await loginPage.navigate();
         await loginPage.login('standard_user', 'secret_sauce');
@@ -116,10 +112,6 @@ test.describe('Checkout flow tests',()=>{
     });
 
     test('Cancel button should navigate back to cart', async({page})=>{
-        const loginPage = new LoginPage(page);
-        const productsPage = new ProductsPage(page);
-        const cartPage = new CartPage(page);
-        const checkoutPage = new CheckoutPage(page);
         
         //Login and add products
         await loginPage.navigate();
@@ -136,10 +128,6 @@ test.describe('Checkout flow tests',()=>{
     });
 
     test.only('Validate navigation between checkout steps', async ({page})=>{
-        const loginPage = new LoginPage(page);
-        const productsPage = new ProductsPage(page);
-        const cartPage = new CartPage(page);
-        const checkoutPage = new CheckoutPage(page);
 
         //Login and add products
         await loginPage.navigate();

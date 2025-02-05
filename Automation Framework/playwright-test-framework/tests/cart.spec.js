@@ -5,11 +5,18 @@ import LoginPage from '../pages/login.page';
 
 test.describe('Cart page tests',()=>{
     
-    test('Verify items in the cart', async ({page})=>{
-        const productsPage = new ProductsPage(page);
-        const cartPage = new CartPage(page);
-        const loginPage = new LoginPage(page);
+    let productsPage;
+    let cartPage;
+    let loginPage;
 
+    test.beforeEach('', ({page})=>{
+        productsPage = new ProductsPage(page);
+        cartPage = new CartPage(page);
+        loginPage = new LoginPage(page);
+    })
+
+    test('Verify items in the cart', async ({page})=>{
+        
         //Login and add items to the cart
         await loginPage.navigate();
         await loginPage.login('standard_user','secret_sauce');
@@ -28,9 +35,6 @@ test.describe('Cart page tests',()=>{
     });
 
     test('Remove an item from the cart', async({page})=>{
-        const loginPage = new LoginPage(page);
-        const productsPage = new ProductsPage(page);
-        const cartPage = new CartPage(page);
 
         await loginPage.navigate();
         await loginPage.login('standard_user','secret_sauce');
@@ -51,10 +55,7 @@ test.describe('Cart page tests',()=>{
     });
 
     test('Proceed to checkout from the cart', async({page})=>{
-        const loginPage = new LoginPage(page);
-        const productsPage = new ProductsPage(page);
-        const cartPage =  new CartPage(page);
-
+   
         //Login and add items to the cart
         await loginPage.navigate();
         await loginPage.login('standard_user', 'secret_sauce');

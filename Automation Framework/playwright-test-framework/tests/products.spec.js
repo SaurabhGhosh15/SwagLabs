@@ -4,9 +4,16 @@ const ProductsPage = require('../pages/products.page');
 
 test.describe('Adding/ removing products from cart', ()=>{
 
+    let productsPage;
+    let cartPage;
+    let loginPage;
+
+    test.beforeEach('', ({page})=>{
+        productsPage = new ProductsPage(page);
+        loginPage = new LoginPage(page);
+    })
+
 test('Add a single item to cart and verify', async ({page})=>{
-    const loginPage = new LoginPage(page);
-    const productsPage = new ProductsPage(page);
     
     //Login̦̦̦̦
     await loginPage.navigate();
@@ -26,8 +33,6 @@ test('Add a single item to cart and verify', async ({page})=>{
 });
 
 test('Add all 6 products to cart and verify', async({page})=>{
-    const loginPage = new LoginPage(page);
-    const productsPage = new ProductsPage(page);
 
     //Login
     await loginPage.navigate();
