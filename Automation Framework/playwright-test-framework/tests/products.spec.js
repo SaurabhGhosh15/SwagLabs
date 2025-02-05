@@ -5,7 +5,6 @@ const ProductsPage = require('../pages/products.page');
 test.describe('Adding/ removing products from cart', ()=>{
 
     let productsPage;
-    let cartPage;
     let loginPage;
 
     test.beforeEach('', ({page})=>{
@@ -53,5 +52,71 @@ test('Add all 6 products to cart and verify', async({page})=>{
 
 
 });
-
 });
+
+
+test.describe.only('Verify sorting formats', ()=>{
+
+    test('Verify items can be sorted from highest to lowest price of items', async({page})=>{
+        const productsPage = new ProductsPage(page);
+        const loginPage = new LoginPage(page);
+        //Login
+        await loginPage.navigate();
+        await loginPage.login('standard_user', 'secret_sauce');
+    
+        //Sort items from high to low price
+        await productsPage.sortItems('Price (high to low)');
+    
+        //Verify and display first and last product's price
+        const allProductDetails = await productsPage.getFirstAndLastItemDetails();
+        console.log(allProductDetails);
+    
+    });
+
+    test('Verify items can be sorted from lowest to highest price of items', async({page})=>{
+        const productsPage = new ProductsPage(page);
+        const loginPage = new LoginPage(page);
+        //Login
+        await loginPage.navigate();
+        await loginPage.login('standard_user', 'secret_sauce');
+    
+        //Sort items from high to low price
+        await productsPage.sortItems('Price (low to high)');
+    
+        //Verify and display first and last product's price
+        const allProductDetails = await productsPage.getFirstAndLastItemDetails();
+        console.log(allProductDetails);
+    });
+
+    test('Verify items can be sorted in ascending order by name', async({page})=>{
+        const productsPage = new ProductsPage(page);
+        const loginPage = new LoginPage(page);
+        //Login
+        await loginPage.navigate();
+        await loginPage.login('standard_user', 'secret_sauce');
+    
+        //Sort items from high to low price
+        await productsPage.sortItems('A to Z');
+    
+        //Verify and display first and last product's price
+        const allProductDetails = await productsPage.getFirstAndLastItemDetails();
+        console.log(allProductDetails);
+    });
+
+    test('Verify items can be sorted in descending order by name', async({page})=>{
+        const productsPage = new ProductsPage(page);
+        const loginPage = new LoginPage(page);
+        //Login
+        await loginPage.navigate();
+        await loginPage.login('standard_user', 'secret_sauce');
+    
+        //Sort items from high to low price
+        await productsPage.sortItems('Z to A');
+    
+        //Verify and display first and last product's price
+        const allProductDetails = await productsPage.getFirstAndLastItemDetails();
+        console.log(allProductDetails);
+    });
+
+
+})

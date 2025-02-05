@@ -4,6 +4,7 @@ class ProductsPage{
         this.cartIcon = '.shopping_cart_link';
         this.cartCount = '.shopping_cart_badge';
         this.productContainer = '.inventory_item';
+        this.sortDropdown = '.product_sort_container';
     }
 
     async addItemToCart(productName){
@@ -63,6 +64,42 @@ class ProductsPage{
                 price: productPrice.trim(),
             });
         }
+        return productDetails;
+    }
+
+    async sortItems(type){
+        if(type === 'Price (high to low)')
+            await this.page.selectOption(this.sortDropdown, {label: 'Price (high to low)'});
+        else if(type === 'Price (low to high)')
+            await this.page.selectOption(this.sortDropdown, {label:'Price (low to high)'});
+        else if(type ==='A to Z')
+            await this.page.selectOption(this.sortDropdown, {label:'Name (A to Z)'});
+        else if(type === 'Z to A')
+            await this.page.selectOption(this.sortDropdown, {label:'Name (Z to A)'});
+
+    }
+
+    async getFirstAndLastItemDetails(){
+        const productDetails = [];
+
+        const productNames = await this.page.locator('.inventory_item_name');
+            const productPrices  = await this.page.locator('.inventory_item_price');
+
+            const firstProductName = await productNames.nth(0).textContent();
+            const firstProductPrice = await productPrices.nth(0).textContent();
+
+            productDetails.push({
+                name: firstProductName.trim(),
+                price: firstProductPrice.trim(),
+            });
+
+            const lastProductName = await productNames.nth(5).textContent();
+            const lastProductPrice = await productPrices.nth(5).textContent();
+
+            productDetails.push({
+                name: lastProductName.trim(),
+                price: lastProductPrice.trim(),
+            });
         return productDetails;
     }
 }
